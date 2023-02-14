@@ -28,15 +28,22 @@ int main()
 	std::vector<std::shared_ptr<Erwinia>> tempE;
 	std::vector<std::shared_ptr<Myxococcus>> tempM;
 	while (1) {
-		std::cin.get(temp);
-		for (unsigned int i = 0; i < myxococcusVector.size(); i++)
-		{
+		//std::cin.get(temp);
 
-			tempM.push_back(myxococcusVector[i]->BinaryFission());
-		}
 		for (unsigned int i = 0; i < erwiniaVector.size(); i++)
 		{
-			tempE.push_back(erwiniaVector[i]->BinaryFission());
+			auto temp2 = erwiniaVector[i]->BinaryFission();
+			if (temp2 != nullptr) {
+				tempE.push_back(temp2);
+			}
+		}
+		for (unsigned int i = 0; i < myxococcusVector.size(); i++)
+		{
+			auto temp1 = myxococcusVector[i]->BinaryFission();
+			if (temp1 != nullptr)
+			{
+				tempM.push_back(temp1);
+			}
 		}
 		myxococcusVector.insert(myxococcusVector.end(), tempM.begin(), tempM.end());
 		erwiniaVector.insert(erwiniaVector.end(), tempE.begin(), tempE.end());
