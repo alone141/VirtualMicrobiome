@@ -1,10 +1,14 @@
 #pragma once
+#include <windows.h>
+#include <stdlib.h>
+#include "Habitat.h"
+
 class MapHandler
 {
 public:
-	HANDLER handler;
+	HANDLE handler;
 	void Open();
-	void Draw(Habitat* hab);
+	void Draw(Habitat* h);
 	void Reset();
 };
 

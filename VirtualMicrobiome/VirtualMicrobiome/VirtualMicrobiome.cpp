@@ -1,20 +1,52 @@
-﻿// VirtualMicrobiome.cpp : Bu dosya 'main' işlevi içeriyor. Program yürütme orada başlayıp biter.
-//
-
-#include <iostream>
-
+﻿#include <iostream>
+#include <io.h>
+#include <time.h>
+#include <windows.h>
+#include <string.h>
+#include <stdlib.h>
+#include <vector>
+#include "Habitat.h"
+#include "Bacteria.h"
+#include "Erwinia.h"
+#include "Myxococcus.h"
+#include "MapHandler.h"
+Habitat habitat;
 int main()
 {
-    std::cout << "Hello World!\n";
+	srand(time(0));
+	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	std::vector<std::shared_ptr<Erwinia>> erwiniaVector;
+	std::vector<std::shared_ptr<Myxococcus>> myxococcusVector;
+	auto erwiniaZero = std::make_shared<Erwinia>(&habitat);
+	auto myxococcusZero = std::make_shared<Myxococcus>(&habitat);
+	erwiniaVector.push_back(erwiniaZero);
+	myxococcusVector.push_back(myxococcusZero);
+	MapHandler mapHandler;
+	mapHandler.Open();
+	mapHandler.Draw(&habitat);
+	char temp;
+	std::vector<std::shared_ptr<Erwinia>> tempE;
+	std::vector<std::shared_ptr<Myxococcus>> tempM;
+	while (1) {
+		std::cin.get(temp);
+		for (unsigned int i = 0; i < myxococcusVector.size(); i++)
+		{
+
+			tempM.push_back(myxococcusVector[i]->BinaryFission());
+		}
+		for (unsigned int i = 0; i < erwiniaVector.size(); i++)
+		{
+			tempE.push_back(erwiniaVector[i]->BinaryFission());
+		}
+		myxococcusVector.insert(myxococcusVector.end(), tempM.begin(), tempM.end());
+		erwiniaVector.insert(erwiniaVector.end(), tempE.begin(), tempE.end());
+		tempE.clear();
+		tempM.clear();
+		//for (auto& element : myxococcusVector) myxococcusVector.push_back(element->BinaryFission());
+		//for (auto& element : erwiniaVector) erwiniaVector.push_back(element->BinaryFission());
+		mapHandler.Draw(&habitat);
+	}
+
+
 }
 
-// Programı çalıştır: Ctrl + F5 veya Hata Ayıkla > Hata Ayıklamadan Başlat menüsü
-// Programda hata ayıkla: F5 veya Hata Ayıkla > Hata Ayıklamayı Başlat menüsü
-
-// Kullanmaya Başlama İpuçları: 
-//   1. Dosyaları eklemek/yönetmek için Çözüm Gezgini penceresini kullanın
-//   2. Kaynak denetimine bağlanmak için Takım Gezgini penceresini kullanın
-//   3. Derleme çıktısını ve diğer iletileri görmek için Çıktı penceresini kullanın
-//   4. Hataları görüntülemek için Hata Listesi penceresini kullanın
-//   5. Yeni kod dosyaları oluşturmak için Projeye Git > Yeni Öğe ekle veya varolan kod dosyalarını projeye eklemek için Proje > Var Olan Öğeyi Ekle adımlarını izleyin
-//   6. Bu projeyi daha sonra yeniden açmak için Dosya > Aç > Proje'ye gidip .sln uzantılı dosyayı seçin
