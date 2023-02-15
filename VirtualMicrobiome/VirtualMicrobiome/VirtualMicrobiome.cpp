@@ -29,7 +29,6 @@ int main()
 	std::vector<std::shared_ptr<Myxococcus>> tempM;
 	while (1) {
 		std::cin.get(temp);
-
 		for (unsigned int i = 0; i < erwiniaVector.size(); i++)
 		{
 			auto temp2 = erwiniaVector[i]->BinaryFission();
@@ -49,8 +48,6 @@ int main()
 		erwiniaVector.insert(erwiniaVector.end(), tempE.begin(), tempE.end());
 		tempE.clear();
 		tempM.clear();
-		//for (auto& element : myxococcusVector) myxococcusVector.push_back(element->BinaryFission());
-		//for (auto& element : erwiniaVector) erwiniaVector.push_back(element->BinaryFission());
 		mapHandler.Draw(&habitat);
 	}
 
