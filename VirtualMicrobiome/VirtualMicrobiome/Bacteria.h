@@ -19,23 +19,26 @@ public:
 	Bacteria(int x, int y, Habitat* h, int shape, float random) : x(x), y(y), habitat(h), shape(shape), random(random) {
 		habitat->map[x%constant::MAP_SIZE_X][y % constant::MAP_SIZE_Y] = shape;
 	}
-	virtual std::shared_ptr<T> BinaryFission() {
+	virtual ~Bacteria() {
+		habitat->map[this->x][this->y] = 0;
+	}
+	virtual std::unique_ptr<T> BinaryFission() {
 		int newPosX = std::abs(this->x + rand() % 3 - 1);
 		int newPosY = std::abs(this->y + rand() % 3 - 1);
 		if (newPosX >= constant::MAP_SIZE_X || newPosY >= constant::MAP_SIZE_Y) {
-			return std::shared_ptr<T>();
+			return std::unique_ptr<T>();
 		}
 		if (habitat->map[newPosX][newPosY] != 0) {
-			return std::shared_ptr<T>();
+			return std::unique_ptr<T>();
 		}
 		if(readyForFission) {
-			return std::make_shared<T>(newPosX,
+			return std::make_unique<T>(newPosX,
 				newPosY,
 				habitat,
 				shape
 				);
 		}
-		else return std::shared_ptr<T>();;
+		else return std::unique_ptr<T>();;
 
 	}
 };

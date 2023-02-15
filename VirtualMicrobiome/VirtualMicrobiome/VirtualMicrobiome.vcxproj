@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bacteria.cpp" />
+    <ClCompile Include="BiomeHandler.cpp" />
     <ClCompile Include="Erwinia.cpp" />
     <ClCompile Include="MapHandler.cpp" />
     <ClCompile Include="Myxococcus.cpp" />
@@ -136,9 +137,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bacteria.h" />
+    <ClInclude Include="BiomeHandler.h" />
     <ClInclude Include="Erwinia.h" />
     <ClInclude Include="Habitat.h" />
     <ClInclude Include="MapHandler.h" />
+    <ClInclude Include="Microbiome.h" />
     <ClInclude Include="Myxococcus.h" />
     <ClInclude Include="Constants.h" />
   </ItemGroup>
