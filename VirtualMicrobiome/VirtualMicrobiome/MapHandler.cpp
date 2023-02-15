@@ -18,10 +18,19 @@ void MapHandler::Draw(Habitat* h)
 			if (h->map[y][x] == 1) SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			else if (h->map[y][x] == 2) SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_GREEN);
 			else SetConsoleTextAttribute(hConsole, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-			std::cout << "  ";
+			//std::cout << ' ';
+			//std::cout << ' ';
+			std::cout << h->map[y][x];
+			std::cout << h->map[y][x];
 		}
 		std::cout << std::endl;
 	}
+	std::cout << std::endl;
+	SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+	std::cout << "  " << "Erwinia ";
+	SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_GREEN);
+	std::cout << "  " << "Myxococcus ";
+
 }
 
 

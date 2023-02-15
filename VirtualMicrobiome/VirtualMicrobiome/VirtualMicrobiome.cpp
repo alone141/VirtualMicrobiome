@@ -28,7 +28,7 @@ int main()
 	std::vector<std::shared_ptr<Erwinia>> tempE;
 	std::vector<std::shared_ptr<Myxococcus>> tempM;
 	while (1) {
-		//std::cin.get(temp);
+		std::cin.get(temp);
 
 		for (unsigned int i = 0; i < erwiniaVector.size(); i++)
 		{
