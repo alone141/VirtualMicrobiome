@@ -3,6 +3,7 @@
 void MapHandler::Open()
 {
 	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+	SetConsoleTitleA("Muazzam");
 	system("CLS");
 }
 

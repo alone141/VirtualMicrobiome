@@ -13,7 +13,7 @@ public:
 	float random;
 	char shape;
 	Habitat* habitat;
-	bool readyForFission = true;
+	bool readyForFission = constant::READY_FOR_FISSION;
 	Bacteria(int x, int y, Habitat* h, int shape) : x(x), y(y), habitat(h), shape(shape), random(1.0) {
 		habitat->map[x % constant::MAP_SIZE_X][y % constant::MAP_SIZE_Y] = shape;
 	}
@@ -45,5 +45,19 @@ public:
 		else return std::unique_ptr<T>();
 
 	}
+	virtual void Move() {
+		int newPosX = std::abs(this->x + rand() % 3 - 1);
+		int newPosY = std::abs(this->y + rand() % 3 - 1);
+		if (habitat->map[newPosX][newPosY] == 0 && newPosX < constant::MAP_SIZE_X && newPosY < constant::MAP_SIZE_Y) {
+			habitat->updatedPixels.push_back({ this->x,this->y, 0 });
+			habitat->map[this->x][this->y] = 0;
+
+			this->x = newPosX;
+			this->y = newPosY;
+			habitat->updatedPixels.push_back({ newPosX,newPosY, this->shape });
+		}
+
+	}
+
 };
 

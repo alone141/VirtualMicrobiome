@@ -28,7 +28,7 @@ int main()
 
 	while (1) {
 		/*std::cin.get(temp);*/
-		Sleep(1);
+		Sleep(100);
 
 
 		genericBiomeHandler();
