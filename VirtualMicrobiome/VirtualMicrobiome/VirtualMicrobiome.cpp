@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <vector>
+
 #include "Habitat.h"
 #include "Bacteria.h"
 #include "Erwinia.h"
@@ -19,18 +20,18 @@ BiomeHandler biomeHandler(&microbiome);
 
 int main()
 {
-	srand(time(0));
+
+	srand(std::random_device{}());
 	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	mapHandler.Open();
 	mapHandler.Draw(&habitat);
+
 	while (1) {
 		/*std::cin.get(temp);*/
 		Sleep(50);
 
 		biomeHandler.Update();
-		mapHandler.Draw(&habitat);
+		mapHandler.PixelDraw(habitat.updatedPixels);
 	}
-
-
 }
 

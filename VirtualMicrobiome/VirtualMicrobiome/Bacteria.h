@@ -32,6 +32,7 @@ public:
 			return std::unique_ptr<T>();
 		}
 		if(readyForFission) {
+			habitat->updatedPixels.push_back({ newPosX, newPosY,this->shape });
 			return std::make_unique<T>(newPosX,
 				newPosY,
 				habitat,

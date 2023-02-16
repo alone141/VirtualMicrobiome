@@ -1,5 +1,4 @@
 #include "BiomeHandler.h"
-
 void BiomeHandler::Update() {
 	for (unsigned int i = 0; i < microbiome->erwiniaColony->size(); i++)
 	{

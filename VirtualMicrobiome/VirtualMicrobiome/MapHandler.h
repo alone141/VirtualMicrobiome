@@ -10,5 +10,6 @@ public:
 	void Open();
 	void Draw(Habitat* h);
 	void Reset();
+	void PixelDraw(std::vector<std::array<int, 3>>&);
 };
 
