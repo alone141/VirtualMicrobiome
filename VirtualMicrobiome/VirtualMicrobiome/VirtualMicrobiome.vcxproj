@@ -128,11 +128,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bacteria.cpp" />
     <ClCompile Include="BiomeHandler.cpp" />
-    <ClCompile Include="Erwinia.cpp" />
     <ClCompile Include="MapHandler.cpp" />
-    <ClCompile Include="Myxococcus.cpp" />
     <ClCompile Include="VirtualMicrobiome.cpp" />
   </ItemGroup>
   <ItemGroup>

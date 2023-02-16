@@ -2,10 +2,13 @@
 #include <vector>
 #include "Erwinia.h"
 #include "Myxococcus.h"
+
 class Microbiome
 {
 public:
 	Microbiome(Habitat* h) {
+		srand(std::random_device{}());
+
 		this->erwiniaColony->push_back(std::move(std::make_unique<Erwinia>(h)));
 		this->myxococcusColony->push_back(std::move(std::make_unique<Myxococcus>(h)));
 		colonies = std::make_tuple(erwiniaColony, myxococcusColony);

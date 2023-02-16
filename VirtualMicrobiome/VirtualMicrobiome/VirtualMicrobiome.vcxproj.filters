@@ -21,15 +21,6 @@
     <ClCompile Include="MapHandler.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
-    <ClCompile Include="Bacteria.cpp">
-      <Filter>Kaynak Dosyalar</Filter>
-    </ClCompile>
-    <ClCompile Include="Erwinia.cpp">
-      <Filter>Kaynak Dosyalar</Filter>
-    </ClCompile>
-    <ClCompile Include="Myxococcus.cpp">
-      <Filter>Kaynak Dosyalar</Filter>
-    </ClCompile>
     <ClCompile Include="BiomeHandler.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>

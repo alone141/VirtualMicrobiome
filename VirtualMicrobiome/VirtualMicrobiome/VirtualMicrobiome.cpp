@@ -17,24 +17,21 @@
 Habitat habitat;
 MapHandler mapHandler;
 Microbiome microbiome(&habitat);
-BiomeHandler biomeHandler(&microbiome);
 GenericBiomeHandler<AllSpecies> genericBiomeHandler(&microbiome);
 
 int main()
 {
 
 	srand(std::random_device{}());
-	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	mapHandler.Open();
 	mapHandler.Draw(&habitat);
-	genericBiomeHandler(NULL);
 
 	while (1) {
 		/*std::cin.get(temp);*/
-		Sleep(50);
-		genericBiomeHandler(NULL);
+		Sleep(1);
 
-		//biomeHandler.Update();
+
+		genericBiomeHandler();
 		mapHandler.PixelDraw(habitat.updatedPixels);
 	}
 }
