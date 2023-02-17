@@ -3,13 +3,18 @@
 #include <windows.h>
 namespace constant {
 	static const HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	static constexpr int MAP_SIZE_X = 10;
-	static constexpr int MAP_SIZE_Y = 10;
-	static constexpr bool READY_FOR_FISSION = false;
+	static constexpr int MAP_SIZE_X = 50;
+	static constexpr int MAP_SIZE_Y = 50;
+	static constexpr int LIFESPAN_ERWINIA = 5;
+	static constexpr int LIFESPAN_MYXOCOCCUS = 5;
+	static constexpr uint8_t SIGHT_BACTERIA = 5;
+	static constexpr bool READY_FOR_FISSION = true;
 	namespace colors
 	{
 		static constexpr int erwiniaColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
 		static constexpr int myxcoccusColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+		static constexpr int backgroundColor = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
+		static constexpr int foodColor = BACKGROUND_GREEN | FOREGROUND_GREEN;
 	}
 
 	static std::mt19937 mersenne_twister{ std::random_device{}() };

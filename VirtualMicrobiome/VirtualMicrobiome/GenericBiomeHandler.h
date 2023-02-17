@@ -20,11 +20,12 @@ struct GenericBiomeHandler<std::tuple<Args...>> {
     void Update(Microbiome* m) {
         std::vector<std::unique_ptr<T>> tempColony;
         std::shared_ptr<std::vector<std::unique_ptr<T>>> colony = std::get<std::shared_ptr<std::vector<std::unique_ptr<T>>>>(m->colonies);
+        colony->erase(std::remove(colony->begin(), colony->end(), nullptr), colony->end());
         for (unsigned int i = 0; i < colony->size(); i++)
         {
             if ((*colony)[i] != nullptr)
             {
-                (*colony)[i]->Move();
+                //(*colony)[i]->Move();
 
                 if ((*colony)[i]->age > (*colony)[i]->expectedLifespan) {
                     (*colony)[i].reset(); //kaderden öldü 

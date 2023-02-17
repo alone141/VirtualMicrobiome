@@ -5,7 +5,7 @@ class Erwinia :
     public Bacteria<Erwinia>
 {
 public:
-    uint8_t expectedLifespan = 255;
+    uint8_t expectedLifespan = constant::LIFESPAN_ERWINIA;
 
     Erwinia(Habitat* h) : Bacteria(rand() % constant::MAP_SIZE_X, rand() % constant::MAP_SIZE_Y, h, 1) {
     }

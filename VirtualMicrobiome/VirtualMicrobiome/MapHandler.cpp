@@ -16,9 +16,7 @@ void MapHandler::Draw(Habitat* h)
 	{
 		for (int y = 0; y < constant::MAP_SIZE_Y; y++)
 		{
-			if (h->map[y][x] == 1) SetConsoleTextAttribute(hConsole, constant::colors::erwiniaColor);
-			else if (h->map[y][x] == 2) SetConsoleTextAttribute(hConsole, constant::colors::myxcoccusColor);
-			else SetConsoleTextAttribute(hConsole, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+			ColorPicker(h->map[y][x]);
 			//std::cout << ' ';
 			//std::cout << ' ';
 			//std::cout << h->map[y][x];
@@ -41,10 +39,8 @@ void MapHandler::PixelDraw(std::vector<std::array<int, 3>>& updatedPx) {
 		char ch = 'X'; // Character to be written
 		DWORD written; // Placeholder for the number of characters actually written
 	for (auto& element : updatedPx) {
-		if (element[2] == 1) SetConsoleTextAttribute(constant::consoleHandle, constant::colors::erwiniaColor);
-		else if (element[2] == 2) SetConsoleTextAttribute(constant::consoleHandle, constant::colors::myxcoccusColor);
-		else SetConsoleTextAttribute(constant::consoleHandle, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 
+		ColorPicker(element[2]);
 		position.X = element[0] * 2;
 		position.Y = element[1];
 		SetConsoleCursorPosition(constant::consoleHandle, position); // Move the cursor to the specified position
@@ -59,4 +55,10 @@ void MapHandler::PixelDraw(std::vector<std::array<int, 3>>& updatedPx) {
 void MapHandler::Reset()
 {
 	system("CLS");
+}
+void MapHandler::ColorPicker(int shp) {
+	if (shp == 1) SetConsoleTextAttribute(constant::consoleHandle, constant::colors::erwiniaColor);
+	else if (shp == 2) SetConsoleTextAttribute(constant::consoleHandle, constant::colors::myxcoccusColor);
+	else if (shp == 'f') SetConsoleTextAttribute(constant::consoleHandle, constant::colors::foodColor);
+	else SetConsoleTextAttribute(constant::consoleHandle, constant::colors::backgroundColor);
 }

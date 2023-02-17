@@ -14,6 +14,7 @@
 #include "Microbiome.h"
 #include "BiomeHandler.h"
 #include "GenericBiomeHandler.h"
+#include "Food.h"
 Habitat habitat;
 MapHandler mapHandler;
 Microbiome microbiome(&habitat);
@@ -25,10 +26,11 @@ int main()
 	srand(std::random_device{}());
 	mapHandler.Open();
 	mapHandler.Draw(&habitat);
-
+	char temp;
+	Food f(&habitat);
 	while (1) {
-		/*std::cin.get(temp);*/
-		Sleep(100);
+		//std::cin.get(temp);
+		//Sleep(1000);
 
 
 		genericBiomeHandler();
