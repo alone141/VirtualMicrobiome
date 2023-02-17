@@ -12,5 +12,6 @@ public:
 	void Reset();
 	void PixelDraw(std::vector<std::array<int, 3>>&);
 	void ColorPicker(int shp);
+	void AddFood(int count);
 };
 

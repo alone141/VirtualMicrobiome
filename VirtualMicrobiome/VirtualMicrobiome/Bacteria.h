@@ -11,10 +11,12 @@ public:
 	uint8_t fissionCount = 0;
 	uint8_t age = 0;
 	uint8_t sight = constant::SIGHT_BACTERIA;
+
 	float random;
 	char shape;
 	Habitat* habitat;
 	bool readyForFission = constant::READY_FOR_FISSION;
+	bool canMove = constant::CAN_MOVE;
 	Bacteria(int x, int y, Habitat* h, int shape) : x(x), y(y), habitat(h), shape(shape), random(1.0) {
 		habitat->map[x % constant::MAP_SIZE_X][y % constant::MAP_SIZE_Y] = shape;
 	}
@@ -48,38 +50,51 @@ public:
 
 	}
 	virtual void Move() {
-		int newPosX;
-		int newPosY;
-		auto foodDirection = SearchFood();
-		if (foodDirection[0] < constant::MAP_SIZE_X && foodDirection[1] < constant::MAP_SIZE_Y) {
-			newPosX = this->x + foodDirection[0];
-			newPosY = this->y + foodDirection[1];
-		}
-		else {
-			newPosX = std::abs(this->x + rand() % 3 - 1);
-			newPosY = std::abs(this->y + rand() % 3 - 1);
-		}
+		if(canMove)
+		{
+			int newPosX;
+			int newPosY;
+			auto foodDirection = SearchFood();
+			if (foodDirection[0] < constant::MAP_SIZE_X && foodDirection[1] < constant::MAP_SIZE_Y) {
+				newPosX = this->x + foodDirection[0];
+				newPosY = this->y + foodDirection[1];
+			}
+			else {
+				newPosX = std::abs(this->x + rand() % 3 - 1);
+				newPosY = std::abs(this->y + rand() % 3 - 1);
+			}
 
-		if (habitat->map[newPosX][newPosY] == 0 && newPosX < constant::MAP_SIZE_X && newPosY < constant::MAP_SIZE_Y) {
-			habitat->updatedPixels.push_back({ this->x,this->y, 0 });
-			habitat->map[this->x][this->y] = 0;
+			if (habitat->map[newPosX][newPosY] == 0 && newPosX < constant::MAP_SIZE_X && newPosY < constant::MAP_SIZE_Y) {
+				habitat->updatedPixels.push_back({ this->x,this->y, 0 });
+				habitat->map[this->x][this->y] = 0;
 
-			this->x = newPosX;
-			this->y = newPosY;
-			habitat->updatedPixels.push_back({ newPosX,newPosY, this->shape });
+				this->x = newPosX;
+				this->y = newPosY;
+				habitat->updatedPixels.push_back({ newPosX,newPosY, this->shape });
+			}
 		}
 
 	}
-	std::array<int, 2> SearchFood() {
-		for (int itX = 0; itX < 2 * this->sight; itX++)
+	virtual std::array<int, 2> SearchFood() {
+		for (int itY = 0; itY < this->sight; itY++)
 		{
-			for (int itY = 0; itY < 2 * this->sight; itY++)
-			{
-				if (this->x - this->sight >= 0) {
-					if (habitat->map[this->x + itX - this->sight][this->y + itY - this->sight] == 'f') {
-						int foodX = this->x + itX - this->sight;
-						int foodY = this->y + itY - this->sight;
-						return { sgn(foodX), sgn(foodY)};
+			for (int itX = 0; itX < this->sight; itX++) {
+				if(this->x + itX < constant::MAP_SIZE_X && this->y + itY < constant::MAP_SIZE_Y 
+				   && this->x - itX >= 0 && this->y - itY >= 0)
+				{
+					if (habitat->map[this->x + itX][this->y + itY] == 'f') {
+						if (itX < 2 && itY < 2) {
+							habitat->map[this->x + itX][this->y + itY] = 0;
+							habitat->updatedPixels.push_back({ this->x + itX,this->y + itY,0 });
+						}
+						else return { -sgn(itX), sgn(itY) };
+					}
+					if (habitat->map[this->x - itX][this->y - itY] == 'f') {
+						if (itX < 2 && itY < 2) {
+							habitat->map[this->x + itX][this->y + itY] = 0;
+							habitat->updatedPixels.push_back({ this->x + itX,this->y + itY,0 });
+						}
+						else return { -sgn(itX), -sgn(itY) };
 					}
 				}
 			}

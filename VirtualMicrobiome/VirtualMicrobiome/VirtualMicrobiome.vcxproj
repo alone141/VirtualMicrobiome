@@ -129,7 +129,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BiomeHandler.cpp" />
-    <ClCompile Include="Food.cpp" />
     <ClCompile Include="MapHandler.cpp" />
     <ClCompile Include="VirtualMicrobiome.cpp" />
   </ItemGroup>
@@ -137,7 +136,6 @@
     <ClInclude Include="Bacteria.h" />
     <ClInclude Include="BiomeHandler.h" />
     <ClInclude Include="Erwinia.h" />
-    <ClInclude Include="Food.h" />
     <ClInclude Include="GenericBiomeHandler.h" />
     <ClInclude Include="Habitat.h" />
     <ClInclude Include="MapHandler.h" />

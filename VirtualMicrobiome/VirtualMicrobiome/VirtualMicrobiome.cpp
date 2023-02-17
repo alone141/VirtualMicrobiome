@@ -27,10 +27,11 @@ int main()
 	mapHandler.Open();
 	mapHandler.Draw(&habitat);
 	char temp;
-	Food f(&habitat);
+	genericBiomeHandler.AddFood(5);
+
 	while (1) {
 		//std::cin.get(temp);
-		//Sleep(1000);
+		//Sleep(100);
 
 
 		genericBiomeHandler();

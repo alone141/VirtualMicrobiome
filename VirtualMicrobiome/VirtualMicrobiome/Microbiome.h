@@ -6,7 +6,8 @@
 class Microbiome
 {
 public:
-	Microbiome(Habitat* h) {
+	Habitat* habitat;
+	Microbiome(Habitat* h) : habitat(h) {
 		srand(std::random_device{}());
 
 		this->erwiniaColony->push_back(std::move(std::make_unique<Erwinia>(h)));

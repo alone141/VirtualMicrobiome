@@ -25,7 +25,7 @@ struct GenericBiomeHandler<std::tuple<Args...>> {
         {
             if ((*colony)[i] != nullptr)
             {
-                //(*colony)[i]->Move();
+                (*colony)[i]->Move();
 
                 if ((*colony)[i]->age > (*colony)[i]->expectedLifespan) {
                     (*colony)[i].reset(); //kaderden öldü 
@@ -44,6 +44,16 @@ struct GenericBiomeHandler<std::tuple<Args...>> {
 
         for (auto& itr : tempColony) {
             colony->push_back(std::move(itr));
+        }
+    }
+
+    void AddFood(int count) {
+        for (int i = 0; i < count; i++)
+        {
+            int newFoodX = rand() % constant::MAP_SIZE_X;
+            int newFoodY = rand() % constant::MAP_SIZE_Y;
+            microbiome->habitat->map[newFoodX][newFoodY] = 'f';
+            microbiome->habitat->updatedPixels.push_back({ newFoodX,newFoodY,'f' });
         }
     }
 

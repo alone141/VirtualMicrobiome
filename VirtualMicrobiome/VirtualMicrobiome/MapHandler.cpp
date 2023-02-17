@@ -36,18 +36,17 @@ void MapHandler::Draw(Habitat* h)
 
 void MapHandler::PixelDraw(std::vector<std::array<int, 3>>& updatedPx) {
 		COORD position; // Set the position to (10, 5)
-		char ch = 'X'; // Character to be written
+		char ch = ' '; // Character to be written
 		DWORD written; // Placeholder for the number of characters actually written
 	for (auto& element : updatedPx) {
+			ColorPicker(element[2]);
+			position.X = element[0] * 2;
+			position.Y = element[1];
+			SetConsoleCursorPosition(constant::consoleHandle, position); // Move the cursor to the specified position
 
-		ColorPicker(element[2]);
-		position.X = element[0] * 2;
-		position.Y = element[1];
-		SetConsoleCursorPosition(constant::consoleHandle, position); // Move the cursor to the specified position
-
-		WriteConsoleA(constant::consoleHandle, &ch, 1, &written, NULL); // Write the character to the console
-		position.X++;
-		WriteConsoleA(constant::consoleHandle, &ch, 1, &written, NULL); // Write the character to the console
+			WriteConsoleA(constant::consoleHandle, &ch, 1, &written, NULL); // Write the character to the console
+			position.X++;
+			WriteConsoleA(constant::consoleHandle, &ch, 1, &written, NULL); // Write the character to the console
 
 	}
 	updatedPx.clear();
@@ -62,3 +61,4 @@ void MapHandler::ColorPicker(int shp) {
 	else if (shp == 'f') SetConsoleTextAttribute(constant::consoleHandle, constant::colors::foodColor);
 	else SetConsoleTextAttribute(constant::consoleHandle, constant::colors::backgroundColor);
 }
+
