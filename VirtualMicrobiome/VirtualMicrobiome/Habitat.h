@@ -8,4 +8,8 @@ struct Habitat
 	int map[constant::MAP_SIZE_X][constant::MAP_SIZE_Y] = { {{0}}};
 	std::vector<std::array<int, 3>> updatedPixels;
 
+    void ChangeLandTo(int x, int y, int shape) {
+        this->map[x][y] = shape;
+        this->updatedPixels.push_back({ x,y,shape });
+    }
 };

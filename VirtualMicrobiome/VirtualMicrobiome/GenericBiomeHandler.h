@@ -52,10 +52,11 @@ struct GenericBiomeHandler<std::tuple<Args...>> {
         {
             int newFoodX = rand() % constant::MAP_SIZE_X;
             int newFoodY = rand() % constant::MAP_SIZE_Y;
-            microbiome->habitat->map[newFoodX][newFoodY] = 'f';
-            microbiome->habitat->updatedPixels.push_back({ newFoodX,newFoodY,'f' });
+            microbiome->habitat->ChangeLandTo(newFoodX, newFoodY, 'f');
         }
     }
+
+
 
 };
 

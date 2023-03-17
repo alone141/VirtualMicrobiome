@@ -1,7 +1,9 @@
 #pragma once
-#include "Habitat.h"
-#include <stdlib.h>
 #include <memory>
+#include <stdlib.h>
+#include "Habitat.h"
+#include "Utils.h"
+
 template<typename T>
 class Bacteria
 {
@@ -24,15 +26,14 @@ public:
 		habitat->map[x%constant::MAP_SIZE_X][y % constant::MAP_SIZE_Y] = shape;
 	}
 	virtual ~Bacteria() {
-		habitat->map[this->x][this->y] = 0;
-		habitat->updatedPixels.push_back({ this->x,this->y, 0 });
+		habitat->ChangeLandTo(this->x, this->y, 0);
 	}
 	virtual std::unique_ptr<T> BinaryFission() {
 		age++;
 
 		int newPosX = std::abs(this->x + rand() % 3 - 1);
 		int newPosY = std::abs(this->y + rand() % 3 - 1);
-		if (newPosX >= constant::MAP_SIZE_X || newPosY >= constant::MAP_SIZE_Y) {
+		if (!CheckMapBounds(newPosX,newPosY)) {
 			return std::unique_ptr<T>();
 		}
 		else if (habitat->map[newPosX][newPosY] != 0) {
@@ -64,10 +65,9 @@ public:
 				newPosY = std::abs(this->y + rand() % 3 - 1);
 			}
 
-			if (habitat->map[newPosX][newPosY] == 0 && newPosX < constant::MAP_SIZE_X && newPosY < constant::MAP_SIZE_Y) {
-				habitat->updatedPixels.push_back({ this->x,this->y, 0 });
-				habitat->map[this->x][this->y] = 0;
+			if (habitat->map[newPosX][newPosY] == 0 && CheckMapBounds(newPosX,newPosY)) {
 
+				habitat->ChangeLandTo(this->x, this->y, 0);
 				this->x = newPosX;
 				this->y = newPosY;
 				habitat->updatedPixels.push_back({ newPosX,newPosY, this->shape });
@@ -76,9 +76,42 @@ public:
 
 	}
 	virtual std::array<int, 2> SearchFood() {
-		for (int itY = 0; itY < this->sight; itY++)
+		//int tempX;
+		//int tempY;
+		//for (int itY = 0; itY < this->sight; itY++)
+		//{
+		//	for (int itX = 0; itX < this->sight; itX++)
+		//	{
+		//		tempX = this->x + itX;
+		//		tempY = this->x + itY;
+		//		if (CheckMapBounds(tempX, tempY)) {
+
+		//			if (habitat->map[tempX][tempY] == 'f') {
+		//				if (itX < 2 && itY < 2) {
+		//					habitat->ChangeLandTo(tempX, tempY, 0);
+		//				}
+		//				return { +1,+1 };
+		//			}
+		//		}
+		//		tempX = this->x - itX;
+		//		tempY = this->x - itY;
+		//		if (CheckMapBounds(tempX, tempY)) {
+
+		//			if (habitat->map[tempX][tempY] == 'f') {
+		//				if (itX < 2 && itY < 2) {
+		//					habitat->ChangeLandTo(tempX, tempY, 0);
+		//				}
+		//				return { -1,-1 };
+		//			}
+		//		}
+		//	}
+		//}
+		//return { constant::MAP_SIZE_X + 1,constant::MAP_SIZE_Y + 1 };
+
+
+		for (int itY = 0; itY < 2*this->sight; itY++)
 		{
-			for (int itX = 0; itX < this->sight; itX++) {
+			for (int itX = 0; itX < 2*this->sight; itX++) {
 				if(this->x + itX < constant::MAP_SIZE_X && this->y + itY < constant::MAP_SIZE_Y 
 				   && this->x - itX >= 0 && this->y - itY >= 0)
 				{
@@ -87,22 +120,53 @@ public:
 							habitat->map[this->x + itX][this->y + itY] = 0;
 							habitat->updatedPixels.push_back({ this->x + itX,this->y + itY,0 });
 						}
-						else return { -sgn(itX), sgn(itY) };
+						else return { sgn(itX), sgn(itY) };
 					}
 					if (habitat->map[this->x - itX][this->y - itY] == 'f') {
 						if (itX < 2 && itY < 2) {
 							habitat->map[this->x + itX][this->y + itY] = 0;
 							habitat->updatedPixels.push_back({ this->x + itX,this->y + itY,0 });
 						}
-						else return { -sgn(itX), -sgn(itY) };
+						else return { sgn(itX), -sgn(itY) };
 					}
 				}
 			}
 		}
 		return {constant::MAP_SIZE_X+1,constant::MAP_SIZE_Y+1};
 	}
-	template <typename T> int sgn(T val) {
-		return (T(0) < val) - (val < T(0));
-	}
+	void print_spiral (int ** matrix, int size)
+{
+		int x = this->x; // current position; x
+		int y = this->y; // current position; y
+		int d = 0; // current direction; 0=RIGHT, 1=DOWN, 2=LEFT, 3=UP
+		int c = 0; // counter
+		int s = 1; // chain size
+
+		// starting point
+		x = ((int)floor(size/2.0))-1;
+		y = ((int)floor(size/2.0))-1;
+
+		for (int k=1; k<=(size-1); k++)
+		{
+			for (int j=0; j<(k<(size-1)?2:3); j++)
+			{
+				for (int i=0; i<s; i++)
+				{
+					std::cout << matrix[x][y] << " ";
+					c++;
+
+					switch (d)
+					{
+						case 0: y = y + 1; break;
+						case 1: x = x + 1; break;
+						case 2: y = y - 1; break;
+						case 3: x = x - 1; break;
+					}
+				}
+				d = (d+1)%4;
+			}
+			s = s + 1;
+		}
+}
 };
 

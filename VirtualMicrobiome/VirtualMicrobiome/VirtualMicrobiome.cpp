@@ -14,7 +14,6 @@
 #include "Microbiome.h"
 #include "BiomeHandler.h"
 #include "GenericBiomeHandler.h"
-#include "Food.h"
 Habitat habitat;
 MapHandler mapHandler;
 Microbiome microbiome(&habitat);
@@ -30,7 +29,7 @@ int main()
 	genericBiomeHandler.AddFood(5);
 
 	while (1) {
-		//std::cin.get(temp);
+		std::cin.get(temp);
 		//Sleep(100);
 
 

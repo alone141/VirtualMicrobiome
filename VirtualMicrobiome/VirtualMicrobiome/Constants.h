@@ -3,8 +3,8 @@
 #include <windows.h>
 namespace constant {
 	static const HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	static constexpr int MAP_SIZE_X = 50;
-	static constexpr int MAP_SIZE_Y = 50;
+	static constexpr int MAP_SIZE_X = 75;
+	static constexpr int MAP_SIZE_Y = 75;
 	static constexpr int LIFESPAN_ERWINIA = 255;
 	static constexpr int LIFESPAN_MYXOCOCCUS = 255;
 	static constexpr uint8_t SIGHT_BACTERIA = 255;
