@@ -76,97 +76,42 @@ public:
 
 	}
 	virtual std::array<int, 2> SearchFood() {
-		//int tempX;
-		//int tempY;
-		//for (int itY = 0; itY < this->sight; itY++)
-		//{
-		//	for (int itX = 0; itX < this->sight; itX++)
-		//	{
-		//		tempX = this->x + itX;
-		//		tempY = this->x + itY;
-		//		if (CheckMapBounds(tempX, tempY)) {
+		int x = this->x; 
+		int y = this->y; 
+		int direction = 0; //0=RIGHT, 1=DOWN, 2=LEFT, 3=UP
+		int counter = 0; 
+		int chainSize = 1;
 
-		//			if (habitat->map[tempX][tempY] == 'f') {
-		//				if (itX < 2 && itY < 2) {
-		//					habitat->ChangeLandTo(tempX, tempY, 0);
-		//				}
-		//				return { +1,+1 };
-		//			}
-		//		}
-		//		tempX = this->x - itX;
-		//		tempY = this->x - itY;
-		//		if (CheckMapBounds(tempX, tempY)) {
-
-		//			if (habitat->map[tempX][tempY] == 'f') {
-		//				if (itX < 2 && itY < 2) {
-		//					habitat->ChangeLandTo(tempX, tempY, 0);
-		//				}
-		//				return { -1,-1 };
-		//			}
-		//		}
-		//	}
-		//}
-		//return { constant::MAP_SIZE_X + 1,constant::MAP_SIZE_Y + 1 };
-
-
-		for (int itY = 0; itY < 2*this->sight; itY++)
+		for (int k = 1; k <= (constant::MAP_SIZE_X - 1); k++)
 		{
-			for (int itX = 0; itX < 2*this->sight; itX++) {
-				if(this->x + itX < constant::MAP_SIZE_X && this->y + itY < constant::MAP_SIZE_Y 
-				   && this->x - itX >= 0 && this->y - itY >= 0)
+			for (int j = 0; j < (k < (constant::MAP_SIZE_Y - 1) ? 2 : 3); j++)
+			{
+				for (int i = 0; i < chainSize; i++)
 				{
-					if (habitat->map[this->x + itX][this->y + itY] == 'f') {
-						if (itX < 2 && itY < 2) {
-							habitat->map[this->x + itX][this->y + itY] = 0;
-							habitat->updatedPixels.push_back({ this->x + itX,this->y + itY,0 });
-						}
-						else return { sgn(itX), sgn(itY) };
+					//std::cout << habitat->map[x][y] << " ";
+					counter++;
+
+					switch (direction)
+					{
+					case 0: y = y + 1; break;
+					case 1: x = x + 1; break;
+					case 2: y = y - 1; break;
+					case 3: x = x - 1; break;
 					}
-					if (habitat->map[this->x - itX][this->y - itY] == 'f') {
-						if (itX < 2 && itY < 2) {
-							habitat->map[this->x + itX][this->y + itY] = 0;
-							habitat->updatedPixels.push_back({ this->x + itX,this->y + itY,0 });
+					if (habitat->map[x][y] == 'f') {
+						if (std::abs(this->x - x) < 2 && std::abs(this->y - y) < 2) {
+							habitat->map[x][y] = 0;
+							habitat->updatedPixels.push_back({ x,y,0 });
 						}
-						else return { sgn(itX), -sgn(itY) };
+						else return { sgn(-this->x + x), sgn(-this->y + y) };
 					}
 				}
+				direction = (direction + 1) % 4;
 			}
+			chainSize = chainSize + 1;
 		}
+
 		return {constant::MAP_SIZE_X+1,constant::MAP_SIZE_Y+1};
 	}
-	void print_spiral (int ** matrix, int size)
-{
-		int x = this->x; // current position; x
-		int y = this->y; // current position; y
-		int d = 0; // current direction; 0=RIGHT, 1=DOWN, 2=LEFT, 3=UP
-		int c = 0; // counter
-		int s = 1; // chain size
-
-		// starting point
-		x = ((int)floor(size/2.0))-1;
-		y = ((int)floor(size/2.0))-1;
-
-		for (int k=1; k<=(size-1); k++)
-		{
-			for (int j=0; j<(k<(size-1)?2:3); j++)
-			{
-				for (int i=0; i<s; i++)
-				{
-					std::cout << matrix[x][y] << " ";
-					c++;
-
-					switch (d)
-					{
-						case 0: y = y + 1; break;
-						case 1: x = x + 1; break;
-						case 2: y = y - 1; break;
-						case 3: x = x - 1; break;
-					}
-				}
-				d = (d+1)%4;
-			}
-			s = s + 1;
-		}
-}
 };
 
