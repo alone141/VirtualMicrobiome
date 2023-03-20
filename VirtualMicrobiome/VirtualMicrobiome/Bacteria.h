@@ -13,7 +13,7 @@ public:
 	uint8_t fissionCount = 0;
 	uint8_t age = 0;
 	uint8_t sight = constant::SIGHT_BACTERIA;
-
+	float energy = 100;
 	float random;
 	char shape;
 	Habitat* habitat;
@@ -29,8 +29,6 @@ public:
 		habitat->ChangeLandTo(this->x, this->y, 0);
 	}
 	virtual std::unique_ptr<T> BinaryFission() {
-		age++;
-
 		int newPosX = std::abs(this->x + rand() % 3 - 1);
 		int newPosY = std::abs(this->y + rand() % 3 - 1);
 		if (!CheckMapBounds(newPosX,newPosY)) {
@@ -82,9 +80,9 @@ public:
 		int counter = 0; 
 		int chainSize = 1;
 
-		for (int k = 1; k <= (constant::MAP_SIZE_X - 1); k++)
+		for (int k = 1; k <= (this->sight - 1); k++)
 		{
-			for (int j = 0; j < (k < (constant::MAP_SIZE_Y - 1) ? 2 : 3); j++)
+			for (int j = 0; j < (k < (this->sight - 1) ? 2 : 3); j++)
 			{
 				for (int i = 0; i < chainSize; i++)
 				{
@@ -98,10 +96,11 @@ public:
 					case 2: y = y - 1; break;
 					case 3: x = x - 1; break;
 					}
-					if (habitat->map[x][y] == 'f') {
+					if (habitat->map[x][y] == 'f' && CheckMapBounds(x,y)) {
 						if (std::abs(this->x - x) < 2 && std::abs(this->y - y) < 2) {
 							habitat->map[x][y] = 0;
 							habitat->updatedPixels.push_back({ x,y,0 });
+							EnergyChange(20);
 						}
 						else return { sgn(-this->x + x), sgn(-this->y + y) };
 					}
@@ -112,6 +111,20 @@ public:
 		}
 
 		return {constant::MAP_SIZE_X+1,constant::MAP_SIZE_Y+1};
+	}
+	virtual void EnergyChange(int x) {
+		this->energy += x;
+	}
+	virtual int Update() {
+		age++;
+		energy -= 10;
+		this->Move();
+		if (energy <= 0 || age > 20) {
+			return 0;
+		}
+		else {
+			return 1;
+		}
 	}
 };
 

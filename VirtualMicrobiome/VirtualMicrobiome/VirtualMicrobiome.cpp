@@ -14,6 +14,8 @@
 #include "Microbiome.h"
 #include "BiomeHandler.h"
 #include "GenericBiomeHandler.h"
+using AllSpecies = std::tuple<Erwinia, Myxococcus>;
+
 Habitat habitat;
 MapHandler mapHandler;
 Microbiome microbiome(&habitat);

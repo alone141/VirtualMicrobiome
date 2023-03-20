@@ -2,7 +2,6 @@
 #include <vector>
 #include "Erwinia.h"
 #include "Myxococcus.h"
-using AllSpecies = std::tuple<Erwinia, Myxococcus>;
 
 template<typename Tuple>
 struct GenericBiomeHandler;
@@ -25,9 +24,10 @@ struct GenericBiomeHandler<std::tuple<Args...>> {
         {
             if ((*colony)[i] != nullptr)
             {
-                (*colony)[i]->Move();
+                //(*colony)[i]->Move();
+                int isAlive = (*colony)[i]->Update();
 
-                if ((*colony)[i]->age > (*colony)[i]->expectedLifespan) {
+                if (!isAlive) {
                     (*colony)[i].reset(); //kaderden öldü 
                 }
                 else
