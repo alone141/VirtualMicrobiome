@@ -5,8 +5,8 @@ namespace constant {
 	static const HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	static constexpr int MAP_SIZE_X = 50;
 	static constexpr int MAP_SIZE_Y = 50;
-	static constexpr int LIFESPAN_ERWINIA = 25;
-	static constexpr int LIFESPAN_MYXOCOCCUS = 25;
+	static constexpr int LIFESPAN_ERWINIA = 255;
+	static constexpr int LIFESPAN_MYXOCOCCUS = 255;
 	static constexpr uint8_t SIGHT_BACTERIA = 25;
 	static constexpr bool READY_FOR_FISSION = false;
 	static constexpr bool CAN_MOVE = true;

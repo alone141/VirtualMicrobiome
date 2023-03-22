@@ -8,6 +8,7 @@ template<typename T>
 class Bacteria
 {
 public:
+	uint8_t expectedLifespan = 5;
 	uint8_t x;
 	uint8_t y;
 	uint8_t fissionCount = 0;
@@ -117,9 +118,9 @@ public:
 	}
 	virtual int Update() {
 		age++;
-		energy -= 10;
+		energy -= 1;
 		this->Move();
-		if (energy <= 0 || age > 20) {
+		if (energy <= 0 || age > this->expectedLifespan) {
 			return 0;
 		}
 		else {
