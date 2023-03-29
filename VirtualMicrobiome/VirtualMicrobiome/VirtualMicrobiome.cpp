@@ -31,12 +31,12 @@ int main()
 	genericBiomeHandler.AddFood(5);
 
 	while (1) {
-		std::cin.get(temp);
-		if (temp == 'f') {
-			genericBiomeHandler.AddFood(5);
+		//std::cin.get(temp);
+		//if (temp == 'f') {
+		//	genericBiomeHandler.AddFood(5);
 
-		}
-		//Sleep(100);
+		//}
+		Sleep(constant::SIM_PERIOD);
 
 
 		genericBiomeHandler();

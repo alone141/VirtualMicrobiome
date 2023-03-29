@@ -8,12 +8,15 @@ template<typename T>
 class Bacteria
 {
 public:
+	uint8_t weight=0;
+	uint8_t moveAtCycles;
 	uint8_t expectedLifespan = 5;
 	uint8_t x;
 	uint8_t y;
 	uint8_t fissionCount = 0;
 	uint8_t age = 0;
 	uint8_t sight = constant::SIGHT_BACTERIA;
+	uint8_t size = 10;
 	float energy = 100;
 	float random;
 	char shape;
@@ -70,7 +73,9 @@ public:
 				this->x = newPosX;
 				this->y = newPosY;
 				habitat->updatedPixels.push_back({ newPosX,newPosY, this->shape });
+				EnergyChange(-1.0/(this->moveAtCycles * this->moveAtCycles)*constant::SIZE_ERW);
 			}
+
 		}
 
 	}
@@ -102,6 +107,7 @@ public:
 							habitat->map[x][y] = 0;
 							habitat->updatedPixels.push_back({ x,y,0 });
 							EnergyChange(20);
+							return { constant::MAP_SIZE_X + 1,constant::MAP_SIZE_Y + 1 };
 						}
 						else return { sgn(-this->x + x), sgn(-this->y + y) };
 					}
@@ -113,13 +119,15 @@ public:
 
 		return {constant::MAP_SIZE_X+1,constant::MAP_SIZE_Y+1};
 	}
-	virtual void EnergyChange(int x) {
+	virtual void EnergyChange(float x) {
 		this->energy += x;
 	}
 	virtual int Update() {
 		age++;
-		energy -= 1;
-		this->Move();
+		EnergyChange(-1);
+		if (!(age % this->moveAtCycles)) {
+			this->Move();
+		}
 		if (energy <= 0 || age > this->expectedLifespan) {
 			return 0;
 		}

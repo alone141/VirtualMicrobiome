@@ -5,13 +5,20 @@ class Myxococcus : public Bacteria<Myxococcus>
 public:
     Myxococcus(Habitat* h) : Bacteria(rand() % constant::MAP_SIZE_X, rand() % constant::MAP_SIZE_X, h, 2) {
 		this->expectedLifespan = constant::LIFESPAN_MYXOCOCCUS;
-
+		this->moveAtCycles = constant::MOVE_PERIOD_MYX;
+		this->sight = constant::SIGHT_MYX;
 	}
 	Myxococcus(int x, int y, Habitat* h, int shape) : Bacteria(x, y, h, shape, 2) {
 		this->expectedLifespan = constant::LIFESPAN_MYXOCOCCUS;
+		this->moveAtCycles = constant::MOVE_PERIOD_MYX;
+		this->sight = constant::SIGHT_MYX;
+
 	}
 	Myxococcus(int x, int y, Habitat* h, int shape, float random) : Bacteria(x, y, h, shape, random) {
 		this->expectedLifespan = constant::LIFESPAN_MYXOCOCCUS;
+		this->moveAtCycles = constant::MOVE_PERIOD_MYX;
+		this->sight = constant::SIGHT_MYX;
+
 	}
 	~Myxococcus(){}
 };

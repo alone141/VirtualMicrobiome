@@ -2,12 +2,23 @@
 #include <random>
 #include <windows.h>
 namespace constant {
+	static constexpr int SIM_PERIOD = 50;
 	static const HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	static constexpr int MAP_SIZE_X = 50;
 	static constexpr int MAP_SIZE_Y = 50;
+
 	static constexpr int LIFESPAN_ERWINIA = 255;
+	static constexpr int MOVE_PERIOD_ERW = 1;
+	static constexpr int SIGHT_ERW = 35;
+	static constexpr int SIZE_ERW = 35;
+
 	static constexpr int LIFESPAN_MYXOCOCCUS = 255;
-	static constexpr uint8_t SIGHT_BACTERIA = 25;
+	static constexpr int MOVE_PERIOD_MYX = 1;
+	static constexpr int SIGHT_MYX = 35;
+	static constexpr int SIZE_MYX = 35;
+
+
+	static constexpr uint8_t SIGHT_BACTERIA = 35;
 	static constexpr bool READY_FOR_FISSION = false;
 	static constexpr bool CAN_MOVE = true;
 	namespace colors
