@@ -3,20 +3,17 @@
 #include <stdlib.h>
 #include "Habitat.h"
 #include "Utils.h"
-
+#include "BacteriaFeatures.h"
 template<typename T>
 class Bacteria
 {
 public:
+	BacteriaFeatures features;
 	uint8_t weight=0;
-	uint8_t moveAtCycles;
-	uint8_t expectedLifespan = 5;
 	uint8_t x;
 	uint8_t y;
 	uint8_t fissionCount = 0;
 	uint8_t age = 0;
-	uint8_t sight = constant::SIGHT_BACTERIA;
-	uint8_t size = 10;
 	float energy = 100;
 	float random;
 	char shape;
@@ -42,6 +39,8 @@ public:
 			return std::unique_ptr<T>();
 		}
 		else if(readyForFission) {
+			readyForFission = false;
+			energy = energy / 4;
 			habitat->updatedPixels.push_back({ newPosX, newPosY,this->shape });
 			return std::make_unique<T>(newPosX,
 				newPosY,
@@ -73,7 +72,7 @@ public:
 				this->x = newPosX;
 				this->y = newPosY;
 				habitat->updatedPixels.push_back({ newPosX,newPosY, this->shape });
-				EnergyChange(-1.0/(this->moveAtCycles * this->moveAtCycles)*constant::SIZE_ERW);
+				EnergyChange(-1.0/(this->features.moveAtCycles * this->features.moveAtCycles)*this->features.size);
 			}
 
 		}
@@ -86,9 +85,9 @@ public:
 		int counter = 0; 
 		int chainSize = 1;
 
-		for (int k = 1; k <= (this->sight - 1); k++)
+		for (int k = 1; k <= (this->features.sight - 1); k++)
 		{
-			for (int j = 0; j < (k < (this->sight - 1) ? 2 : 3); j++)
+			for (int j = 0; j < (k < (this->features.sight - 1) ? 2 : 3); j++)
 			{
 				for (int i = 0; i < chainSize; i++)
 				{
@@ -125,10 +124,11 @@ public:
 	virtual int Update() {
 		age++;
 		EnergyChange(-1);
-		if (!(age % this->moveAtCycles)) {
+		if (energy > 210 && age > 5) { readyForFission = true; }
+		if (!(age % this->features.moveAtCycles)) {
 			this->Move();
 		}
-		if (energy <= 0 || age > this->expectedLifespan) {
+		if (energy <= 0 || age > this->features.expectedLifespan) {
 			return 0;
 		}
 		else {

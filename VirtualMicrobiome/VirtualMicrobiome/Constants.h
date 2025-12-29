@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 #include <windows.h>
+#include "BacteriaFeatures.h"
 namespace constant {
 	static constexpr int SIM_PERIOD = 50;
 	static const HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -10,13 +11,27 @@ namespace constant {
 	static constexpr int LIFESPAN_ERWINIA = 255;
 	static constexpr int MOVE_PERIOD_ERW = 1;
 	static constexpr int SIGHT_ERW = 35;
-	static constexpr int SIZE_ERW = 35;
+	static constexpr int SIZE_ERW = 1;
 
 	static constexpr int LIFESPAN_MYXOCOCCUS = 255;
 	static constexpr int MOVE_PERIOD_MYX = 1;
 	static constexpr int SIGHT_MYX = 35;
-	static constexpr int SIZE_MYX = 35;
+	static constexpr int SIZE_MYX = 5;
 
+	inline constexpr BacteriaFeatures ErwiniaFeatures
+	{
+		.expectedLifespan = constant::LIFESPAN_ERWINIA,
+		.moveAtCycles = constant::MOVE_PERIOD_ERW,
+		.sight = constant::SIGHT_ERW,
+		.size = constant::SIZE_ERW
+	};
+	inline constexpr BacteriaFeatures MyxcoccusFeatures
+	{
+		.expectedLifespan = constant::LIFESPAN_MYXOCOCCUS,
+		.moveAtCycles = constant::MOVE_PERIOD_MYX,
+		.sight = constant::SIGHT_MYX,
+		.size = constant::SIZE_MYX
+	};
 
 	static constexpr uint8_t SIGHT_BACTERIA = 35;
 	static constexpr bool READY_FOR_FISSION = false;

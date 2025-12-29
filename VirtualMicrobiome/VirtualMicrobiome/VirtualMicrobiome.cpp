@@ -33,7 +33,7 @@ int main()
 	while (1) {
 		//std::cin.get(temp);
 		//if (temp == 'f') {
-		//	genericBiomeHandler.AddFood(5);
+		genericBiomeHandler.AddFood(5);
 
 		//}
 		Sleep(constant::SIM_PERIOD);
