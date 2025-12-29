@@ -2,9 +2,11 @@
 #include <random>
 #include <windows.h>
 #include "BacteriaFeatures.h"
+
 namespace constant {
 	static constexpr int SIM_PERIOD = 50;
-	static const HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	inline const HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+
 	static constexpr int MAP_SIZE_X = 50;
 	static constexpr int MAP_SIZE_Y = 50;
 
@@ -20,34 +22,34 @@ namespace constant {
 
 	inline constexpr BacteriaFeatures ErwiniaFeatures
 	{
-		.expectedLifespan = constant::LIFESPAN_ERWINIA,
-		.moveAtCycles = constant::MOVE_PERIOD_ERW,
-		.sight = constant::SIGHT_ERW,
-		.size = constant::SIZE_ERW
+		.expectedLifespan = LIFESPAN_ERWINIA,
+		.moveAtCycles = MOVE_PERIOD_ERW,
+		.sight = SIGHT_ERW,
+		.size = SIZE_ERW
 	};
 	inline constexpr BacteriaFeatures MyxcoccusFeatures
 	{
-		.expectedLifespan = constant::LIFESPAN_MYXOCOCCUS,
-		.moveAtCycles = constant::MOVE_PERIOD_MYX,
-		.sight = constant::SIGHT_MYX,
-		.size = constant::SIZE_MYX
+		.expectedLifespan = LIFESPAN_MYXOCOCCUS,
+		.moveAtCycles = MOVE_PERIOD_MYX,
+		.sight = SIGHT_MYX,
+		.size = SIZE_MYX
 	};
 
-	static constexpr uint8_t SIGHT_BACTERIA = 35;
 	static constexpr bool READY_FOR_FISSION = false;
 	static constexpr bool CAN_MOVE = true;
+
 	namespace colors
 	{
-		static constexpr int erwiniaColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
-		static constexpr int myxcoccusColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-		static constexpr int backgroundColor = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
-		static constexpr int foodColor = BACKGROUND_GREEN | FOREGROUND_GREEN;
+		static constexpr WORD erwiniaColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
+		static constexpr WORD myxcoccusColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+		static constexpr WORD backgroundColor = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
+		static constexpr WORD foodColor = BACKGROUND_GREEN | FOREGROUND_GREEN;
 	}
 
-	static std::mt19937 mersenne_twister{ std::random_device{}() };
-	static std::normal_distribution<float> distribution{ 0, 0.2 };        
-	static inline float AWGN(float stddev = 0.2) {
-		static std::normal_distribution<float> distribution{ 0, stddev };
-		return distribution(mersenne_twister);
+	inline std::mt19937 mersenne_twister{ std::random_device{}() };
+
+	static inline float AWGN(float stddev = 0.2f) {
+		std::normal_distribution<float> dist{ 0.0f, stddev };
+		return dist(mersenne_twister);
 	}
 }
